@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Dungeon from './dungeon.js';
 
 import {createMatrix} from './utils.js';
 
@@ -23,7 +24,7 @@ class Character {
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    const cell = {};
+    const cell = '0';
     const map = createMatrix(10, 20, cell);
     const hero = new Character(100, 0, 'fists', 1, 1);
     const goblin = new Character(15, 1, 'dogslicer', 3, 4);
@@ -38,6 +39,7 @@ class Main extends React.Component {
     return (
       <div className='main container'>
         <div className='text-right'>
+          <Dungeon map={this.state.map} />
           <p>© 2017 CRISBNK</p>
         </div>
       </div>
