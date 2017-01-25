@@ -4,7 +4,7 @@ export default class Dungeon extends React.Component {
   render() {
     return (
       <div>
-        {this.props.map.map(row => <div>{row}</div>)}
+        {this.props.map.map((row, i) => <div key={i}>{row}</div>)}
       </div>
     );
   }
