@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dungeon from './dungeon.js';
 
-import {createMatrix, getRandomNumber} from './utils.js';
+import {createMatrix, getRandomNumber, squareSurroundings} from './utils.js';
 
 class Character {
   constructor(h, l, w, a, d) {
@@ -29,38 +29,55 @@ class Main extends React.Component {
     const hero = new Character(100, 0, 'fists', 1, 1);
     const goblin = new Character(15, 1, 'dogslicer', 3, 4);
     this.state = {
+      mapHeight: 30,
+      mapLength: 50,
       map: map,
       hero: hero,
       enemy: goblin
     };
   }
 
-  prepareRoom() {
-    const x = getRandomNumber(0, 30);
-    const y = getRandomNumber(0, 50);
+  // Create room with coordinates
+  createRoomCoordinates() {
     const l = 3;
     const h = 4;
+    const x = getRandomNumber(0, this.state.mapHeight - l);
+    const y = getRandomNumber(0, this.state.mapLength - h);
     let roomCoordinates = [];
-    // let thisMap = this.state.map;
     for (let i = 0; i < l; i++) {
       for (let j = 0; j < h; j++) {
-        roomCoordinates.push([x + i, y + j]);
-        // thisMap[x + i][y + j] = '1';
+        roomCoordinates.push({x: x + i, y: y + j});
       }
     }
-    let prova = roomCoordinates.some((arr) => this.checkSquare(arr));
-    if (prova) {
-      return;
-    } else {
-      console.log('OK');
-      // this.setRoom(thisMap);
+    console.log(roomCoordinates);
+    let checked = this.checkValidRoom(roomCoordinates);
+    console.log(checked);
+    if (!checked) {
+      const newMap = this.addRoom(roomCoordinates);
+      this.setRoom(newMap);
     }
   }
 
-  checkSquare(arr) {
-    return this.state.map[arr[0]][arr[1]] === '1';
+  // Check if room coordinates are valid (not overlap to another room)
+  checkValidRoom(roomCo) {
+    return roomCo.some(obj => this.checkSquare(obj));
   }
 
+  // Check if a square is already occupied
+  checkSquare(obj) {
+    return this.state.map[obj.x][obj.y] === '1';
+  }
+
+  // Add room to matrix
+  addRoom(room) {
+    let newMap = this.state.map;
+    room.forEach(obj => {
+      newMap[obj.x][obj.y] = '1';
+    });
+    return newMap;
+  }
+
+  // Set new room in the map
   setRoom(map) {
     this.setState({
       map: map
@@ -72,7 +89,11 @@ class Main extends React.Component {
       <div className='main container'>
         <div className='text-right'>
           <Dungeon map={this.state.map} />
-          <button onClick={this.prepareRoom.bind(this)}>Click Me</button>
+          <button
+            onClick={this.createRoomCoordinates.bind(this)}
+            >
+              Click Me
+          </button>
           <p>© 2017 CRISBNK</p>
         </div>
       </div>
