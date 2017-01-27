@@ -39,8 +39,8 @@ class Main extends React.Component {
 
   // Create room with coordinates
   createRoomCoordinates() {
-    const l = 3;
-    const h = 4;
+    const l = getRandomNumber(3, 7);
+    const h = getRandomNumber(3, 7);
     const x = getRandomNumber(0, this.state.mapHeight - l);
     const y = getRandomNumber(0, this.state.mapLength - h);
     let roomCoordinates = [];
