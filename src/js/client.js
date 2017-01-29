@@ -41,8 +41,8 @@ class Main extends React.Component {
   createRoomCoordinates() {
     const l = getRandomNumber(3, 7);
     const h = getRandomNumber(3, 7);
-    const x = getRandomNumber(0, this.state.mapHeight - l);
-    const y = getRandomNumber(0, this.state.mapLength - h);
+    const x = getRandomNumber(0, this.state.mapLength - l);
+    const y = getRandomNumber(0, this.state.mapHeight - h);
     let roomCoordinates = [];
     for (let i = 0; i < l; i++) {
       for (let j = 0; j < h; j++) {
@@ -53,7 +53,7 @@ class Main extends React.Component {
     let checked = this.checkValidRoom(roomCoordinates);
     console.log(checked);
     if (!checked) {
-      const newMap = this.addRoom(roomCoordinates);
+      const newMap = this.addRoom(roomCoordinates, l, h);
       this.setRoom(newMap);
     }
   }
@@ -65,15 +65,23 @@ class Main extends React.Component {
 
   // Check if a square is already occupied
   checkSquare(obj) {
-    return this.state.map[obj.x][obj.y] === '1';
+    return this.state.map[obj.y][obj.x] === '1';
   }
 
   // Add room to matrix
-  addRoom(room) {
+  addRoom(room, l, h) {
+    console.log({l, h});
+    const epX = room[0].x - 1;
+    const epY = room[0].y - 1;
     let newMap = this.state.map;
     room.forEach(obj => {
-      newMap[obj.x][obj.y] = '1';
+      newMap[obj.y][obj.x] = '1';
     });
+    console.log('ep: ', epX, epY);
+    for (let i = 0; i <= l + 1; i++) {
+      newMap[epY][epX + i] = '2';
+      newMap[epY + h + 1][epX + i] = '2';
+    }
     return newMap;
   }
 
