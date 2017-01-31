@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dungeon from './dungeon.js';
 
-import {createMatrix, getRandomNumber} from './utils.js';
+import {createMatrix} from './utils.js';
 import {randomMapGenerator} from './randomMapGenerator.js';
+import {corridorGenerator} from './corridorGenerator.js';
 
 class Character {
   constructor(h, l, w, a, d) {
@@ -39,7 +40,21 @@ class Main extends React.Component {
     };
   }
 
+
   componentWillMount() {
+    // const randomMap = randomMapGenerator(
+    //   this.state.mapHeight,
+    //   this.state.mapLength,
+    //   this.state.roomAttempt
+    // );
+    //
+    // this.setState({
+    //   map: randomMap
+    // });
+  }
+
+  generateRooms() {
+    console.log(this.state);
     const randomMap = randomMapGenerator(
       this.state.mapHeight,
       this.state.mapLength,
@@ -51,11 +66,18 @@ class Main extends React.Component {
     });
   }
 
+  generateCorridors() {
+    const message = corridorGenerator(this.state.map);
+    console.log(message);
+  }
+
   render() {
     return (
       <div className='main container'>
         <div className='text-right'>
           <Dungeon map={this.state.map} />
+          <button onClick={this.generateRooms.bind(this)}>Generate Rooms</button>
+          <button onClick={this.generateCorridors.bind(this)}>Generate Corridors</button>
           <p>© 2017 CRISBNK</p>
         </div>
       </div>

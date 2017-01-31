@@ -15,28 +15,9 @@
   // 6 - pop last array item and go from #1
   // See http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
-import {createMatrix, getRandomNumber, pickRandomProperty} from './utils.js';
+import {createMatrix, getRandomNumber} from './utils.js';
 
 let map = [];
-let iter = [];
-const directions = {
-  n: {
-    x: 0,
-    y: -1
-  },
-  s: {
-    x: 0,
-    y: 1
-  },
-  e: {
-    x: 1,
-    y: 0
-  },
-  o: {
-    x: -1,
-    y: 0
-  }
-};
 
 function randomMapGenerator(mapHeight, mapLength, attempts) {
   const cell = '0';
@@ -47,7 +28,6 @@ function randomMapGenerator(mapHeight, mapLength, attempts) {
     i++;
   }
   clearMapAfterRooms(mapHeight, mapLength);
-  createCorridors(map, mapHeight, mapLength);
   return map;
 }
 
@@ -119,64 +99,4 @@ function clearMapAfterRooms(mapHeight, mapLength) {
   }
 }
 
-function createCorridors(map, mapHeight, mapLength) {
-  const startCoordinates = getFreeSquare(map, mapHeight, mapLength);
-  iter.push(startCoordinates);
-  if (!startCoordinates) {
-    console.log(startCoordinates);
-    console.log('STOP');
-  } else {
-    itinere(iter, map);
-  }
-}
-
-function getFreeSquare(newMap, mapHeight, mapLength) {
-  const coordinates = {};
-  for (let i = 0; i < mapHeight; i++) {
-    for (let j = 0; j < mapLength; j++) {
-      if (map[i][j] === '0') {
-        coordinates.x = j;
-        coordinates.y = i;
-        return coordinates;
-      }
-    }
-  }
-  return coordinates;
-}
-
-function itinere(iter, map) {
-  console.log(iter);
-  const coord = iter[iter.length - 1];
-  const goTo = getDirection(map, coord);
-  const nextCoord = {};
-  nextCoord.x = coord.x + directions[goTo].x;
-  nextCoord.y = coord.y + directions[goTo].y;
-  console.log(coord, goTo, nextCoord);
-  if (!checkSquare(nextCoord)) {
-    iter.push(nextCoord);
-    itinere(iter, map);
-  } else {
-    itinere(iter, map);
-  }
-}
-
-function getDirection(map, coord) {
-  const directions = {};
-  if (!(coord.y - 1)) {
-    directions.n = coord.y - 1;
-  }
-  if (!(coord.y + 1 > map.length)) {
-    directions.s = coord.y + 1;
-  }
-  if (!(coord.x - 1)) {
-    directions.e = coord.x - 1;
-  }
-  if (!(coord.x > map[0].length)) {
-    directions.o = coord.x + 1;
-  }
-  const randomDirection = pickRandomProperty(directions);
-  return randomDirection;
-}
-
-
-export {randomMapGenerator};
+export {randomMapGenerator, checkSquare};
