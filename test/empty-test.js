@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 const foo = 'bar';
 const beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
