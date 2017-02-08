@@ -74,10 +74,10 @@ class Main extends React.Component {
   render() {
     return (
       <div className='main container'>
+        <Dungeon map={this.state.map} />
+        <button onClick={this.generateRooms.bind(this)}>Generate Rooms</button>
+        <button onClick={this.generateCorridors.bind(this)}>Generate Corridors</button>
         <div className='text-right'>
-          <Dungeon map={this.state.map} />
-          <button onClick={this.generateRooms.bind(this)}>Generate Rooms</button>
-          <button onClick={this.generateCorridors.bind(this)}>Generate Corridors</button>
           <p>© 2017 CRISBNK</p>
         </div>
       </div>
