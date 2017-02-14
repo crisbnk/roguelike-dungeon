@@ -23,8 +23,21 @@ describe('createMatrix', () => {
 });
 
 describe('getRandomNumber', () => {
+  const min = 2;
+  const max = 7;
+  const number = getRandomNumber(2, 7);
+
   it('should be a function', () => {
     expect(getRandomNumber).to.be.a('function');
+  });
+
+  it('should be a number', () => {
+    expect(number).to.be.a('number');
+  });
+
+  it('should be more than min and less than max', () => {
+    expect(number).to.be.at.least(min);
+    expect(number).to.be.at.most(max);
   });
 });
 
