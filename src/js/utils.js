@@ -12,11 +12,11 @@ function pickRandomProperty(obj) {
   let result;
   let count = 0;
   for (let prop in obj) {
-    if (Math.random() < 1/++count) {
+    if (Math.random() < 1 / ++count) {
       result = prop;
     }
-    return result;
   }
+  return result;
 }
 
 export {createMatrix, getRandomNumber, pickRandomProperty};

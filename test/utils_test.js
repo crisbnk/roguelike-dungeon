@@ -36,13 +36,29 @@ describe('getRandomNumber', () => {
   });
 
   it('should be more than min and less than max', () => {
-    expect(number).to.be.at.least(min);
-    expect(number).to.be.at.most(max);
+    expect(number).to.be.within(min, max);
   });
 });
 
 describe('pickRandomProperty', () => {
+  const directions = {
+    n: 0,
+    s: 0,
+    e: 0,
+    o: 0
+  };
+  const property = pickRandomProperty(directions);
+
   it('should be a function', () => {
     expect(pickRandomProperty).to.be.a('function');
   });
+
+  it('should be a string', () => {
+    expect(property).to.be.a('string');
+  });
+
+  it('should be a key between n, s, o, e', () => {
+    expect(directions).to.have.any.keys(property);
+  });
+
 });
