@@ -18,6 +18,8 @@ describe('corridorGenerator', () => {
   });
 
   it('should be an object', () => {
-    expect(corridorArray[0]).to.be.an('object');
+    corridorArray.forEach(coord => {
+      expect(coord).to.be.an('object');
+    });
   });
 });
