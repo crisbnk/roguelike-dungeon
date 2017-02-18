@@ -22,8 +22,8 @@ const directions = {
 };
 
 function corridorGenerator(map) {
-  const iter = createCorridors(map);
-  return iter;
+  const corridor = createCorridors(map);
+  return corridor;
 }
 
 function createCorridors(map) {
