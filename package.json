@@ -29,6 +29,7 @@
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "css-loader": "^0.26.1",
+    "deep-equal": "^1.0.1",
     "enzyme": "^2.7.1",
     "eslint": "^3.13.0",
     "eslint-plugin-import": "^2.2.0",

@@ -1,6 +1,6 @@
 import {pickRandomProperty} from './utils.js';
-import {checkSquare} from './randomMapGenerator.js';
 
+const equal = require('deep-equal');
 let iter = [];
 const directions = {
   n: {
@@ -59,13 +59,29 @@ function itinere(iter, map) {
   const nextCoord = {};
   nextCoord.x = coord.x + directions[goTo].x;
   nextCoord.y = coord.y + directions[goTo].y;
-  if (!checkSquare(nextCoord)) {
-    iter.push(nextCoord);
+  isInIter(iter, nextCoord);
+  if (checkValidCoord(map, nextCoord) === '0') {
     console.log('Pushed!', iter);
-  } else {
+    iter.push(nextCoord);
     itinere(iter, map);
+  } else if (checkValidCoord(map, nextCoord) === '1') {
+    itinere(iter, map);
+  } else {
+    console.log('Corridor STOP!');
   }
   return iter;
+}
+
+function checkValidCoord(map, nextCoord) {
+  return map[nextCoord.y][nextCoord.x];
+}
+
+function isInIter(iter, nextCoord) {
+  return iter.some(coord => areObjEquals(coord, nextCoord));
+}
+
+function areObjEquals(objA, objB) {
+  return equal(objA, objB);
 }
 
 function getDirection(map, coord) {
