@@ -1,6 +1,7 @@
 import {pickRandomProperty} from './utils.js';
 
 const equal = require('deep-equal');
+
 let iter = [];
 const directions = {
   n: {
@@ -59,7 +60,9 @@ function itinere(iter, map) {
   const nextCoord = {};
   nextCoord.x = coord.x + directions[goTo].x;
   nextCoord.y = coord.y + directions[goTo].y;
-  isInIter(iter, nextCoord);
+  if (isInIter(iter, nextCoord)) {
+    itinere(iter, map);
+  }
   if (checkValidCoord(map, nextCoord) === '0') {
     console.log('Pushed!', iter);
     iter.push(nextCoord);
@@ -68,8 +71,8 @@ function itinere(iter, map) {
     itinere(iter, map);
   } else {
     console.log('Corridor STOP!');
+    return iter;
   }
-  return iter;
 }
 
 function checkValidCoord(map, nextCoord) {
